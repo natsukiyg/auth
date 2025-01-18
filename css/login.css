@@ -31,7 +31,7 @@ form {
     align-items: center; /* 要素を中央に揃える */
 }
 
-input[type="password"] {
+input[type="password"], input[type="email"] {
     width: 100%;
     padding: 12px;
     font-size: 1rem;

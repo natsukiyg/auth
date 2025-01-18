@@ -1,18 +1,5 @@
 <?php
 
-/* // DB接続
-$dbn ='mysql:dbname=db2;charset=utf8mb4;port=3306;host=localhost'; //phpMyAdminのホスト名
-$user = 'root';
-$pwd = '';
-
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-} // 「dbError:...」が表示されたらdb接続でエラーが発生していることがわかる．
- */
-
 // db_config.phpからデータベース接続情報を持ってくる
 include("db_config.php"); // db_config.phpの中身を読み込むので、$dbnや$pdoが使えるようになる
 
@@ -23,7 +10,7 @@ include("db_config.php"); // db_config.phpの中身を読み込むので、$dbn�
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>メンバー登録フォーム(DB ver1.0)</title>
+    <title>メンバー登録フォーム(DB ver3.0)</title>
     <link rel="stylesheet" href="./css/input.css">
 </head>
 <body>
@@ -46,6 +33,9 @@ include("db_config.php"); // db_config.phpの中身を読み込むので、$dbn�
 
             <label for="email">メールアドレス：</label>
             <input type="email" id="email" name="email" required><br>
+
+            <label for="password">パスワード：</label>
+            <input type="password" id="password" name="password" pattern="^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,30}$" title="英数字を含めて8〜30文字で入力してください" required><br>
 
             <label for="address">住所（都道府県）：</label>
             <select id="address" name="address" required>
@@ -101,6 +91,12 @@ include("db_config.php"); // db_config.phpの中身を読み込むので、$dbn�
 
             <label for="facility">所属施設：</label>
             <input type="text" id="facility" name="facility" required><br>
+
+            <!-- ユーザー権限 -->
+            <label for="user_role">権限：</label><br>
+            <input type="radio" id="role_0" name="user_role" value="0" required> スタッフ（閲覧のみ）
+            <input type="radio" id="role_1" name="user_role" value="1"> チームメンバー（編集可能）
+            <input type="radio" id="role_2" name="user_role" value="2"> 管理者<br>
         </fieldset>
 
         <!-- アンケート情報 -->

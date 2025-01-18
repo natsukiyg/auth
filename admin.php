@@ -1,10 +1,30 @@
 <?php
+
+// db_config.phpからデータベース接続情報を持ってくる
+include("db_config.php"); // db_config.phpの中身を読み込むので、$dbnや$pdoが使えるようになる
 session_start();
 
 // ログインしていない場合、login.php にリダイレクト
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit;
+} 
+
+// 管理者だけがアクセスできるようにチェック（`user_role`が2なら管理者）
+if ($_SESSION['user_role'] != 2) {
+    echo "アクセス権限がありません。";
+    exit();
+}
+
+// 承認待ちユーザーを取得
+try {
+    $sql = "SELECT id, name, email, user_role FROM users WHERE is_approved = 0";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $users = $stmt->fetchAll();
+} catch (PDOException $e) {
+    echo json_encode(["db error" => "{$e->getMessage()}"]);
+    exit();
 }
 
 ?>
@@ -27,6 +47,7 @@ if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== tru
     <li><a href="index.php">メンバー登録フォームを見る</a></li>
     <li><a href="read.php">登録データリストを見る</a></li>
     <li><a href="deleted_list.php">削除されたデータリストを見る</a></li>
+    <li><a href="approve.php">未承認ユーザー一覧を見る</a></li>
 </ul>
 
 <!-- ログアウトボタン -->

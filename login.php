@@ -1,21 +1,42 @@
 <?php
 session_start(); // セッション開始
 
-// 管理者のハッシュ化されたパスワード（本来、データベースなどから取得すべきです）
-define('ADMIN_PASSWORD_HASH', '$2y$10$6sB6yqy6noPDpgPYc6sFZeXo.zIPag5fMKhp7NijKZnQqF.986XBO'); // パスワード のハッシュ
+// データベース接続設定
+include('db_config.php');
+
+//$pdo->exec("USE {$dbName}"); // データベースを選択
+
 
 // ログイン処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $password = $_POST['password'] ?? ''; // パスワード取得
+    $email = $_POST['email'] ?? ''; // メールアドレス
+    $password = $_POST['password'] ?? ''; // パスワード
 
-    // パスワード確認（ハッシュ化されたパスワードと照合）
-    if (password_verify($password, ADMIN_PASSWORD_HASH)) {
-        // パスワードが一致した場合、セッションにフラグをセット
-        $_SESSION['admin_logged_in'] = true;
-        header('Location: admin.php'); // 管理者ページにリダイレクト
-        exit;
-    } else {
-        $error_message = "パスワードが間違っています。";
+    // 入力されたメールアドレスを使ってユーザーを検索
+    try {
+        $sql = "SELECT * FROM auth_table WHERE email = :email";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // ユーザーが見つかった場合、パスワードの照合
+        if ($user && password_verify($password, $user['password'])) {
+            // パスワードが一致した場合、セッションにユーザー情報をセット
+            $_SESSION['user_id'] = $user['memberId'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_role'] = $user['user_role'];  // 役割を保存（0, 1, 2）
+            $_SESSION['is_approved'] = $user['is_approved'];  // 承認状態を保存
+
+            // 全ユーザーがユーザーページに遷移
+            header('Location: user_dashboard.php'); // ユーザーのダッシュボードなどにリダイレクト
+            exit;
+        } else {
+            $error_message = "メールアドレスまたはパスワードが間違っています。";
+        }
+    } catch (PDOException $e) {
+        $error_message = "データベースエラー: " . $e->getMessage();
     }
 }
 ?>
@@ -25,18 +46,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理者ログイン</title>
+    <title>ユーザーログイン</title>
     <link rel="stylesheet" href="./css/login.css">
 </head>
 <body>
 
-<h2>管理者ログイン</h2>
+<h2>ユーザーログイン</h2>
 <?php
  if (isset($error_message)) { echo "<p style='color: red;'>$error_message</p>"; } 
 ?>
 
 <form method="POST">
-    <input type="password" name="password" id="password" placeholder="パスワードを入力" required>
+    <label for="email">メールアドレス：</label>
+    <input type="email" name="email" id="email" placeholder="メールアドレス" required><br>
+
+    <label for="password">パスワード：</label>
+    <input type="password" name="password" id="password" placeholder="英数字8〜30文字" required><br>
+
     <button type="submit">ログイン</button>
 </form>
 

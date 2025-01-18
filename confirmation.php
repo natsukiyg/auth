@@ -18,18 +18,10 @@ $birthday = $member_data['birthday'];
 $email = $member_data['email'];
 $address = $member_data['address'];
 $facility = $member_data['facility'];
+$user_role = $member_data['user_role'];
 $whereDidYouHear = $member_data['whereDidYouHear'];
 $expectations = $member_data['expectations'];
 
-// URLパラメータからデータを取得(GETメソッド)
-//$name = isset($_GET["name"]) ? $_GET["name"] : '';
-//$gender = isset($_GET["gender"]) ? $_GET["gender"] : '';
-//$birthday = isset($_GET["birthday"]) ? $_GET["birthday"] : '';
-//$email = isset($_GET["email"]) ? $_GET["email"] : '';
-//$address = isset($_GET["address"]) ? $_GET["address"] : '';
-//$facility = isset($_GET["facility"]) ? $_GET["facility"] : '';
-//$whereDidYouHear = isset($_GET["whereDidYouHear"]) ? $_GET["whereDidYouHear"] : '';
-//$expectations = isset($_GET["expectations"]) ? $_GET["expectations"] : '';
 ?>
 
 <!DOCTYPE html>
@@ -67,8 +59,10 @@ $expectations = $member_data['expectations'];
         <tr><th>性別</th><td><?= htmlspecialchars($gender) ?></td></tr>
         <tr><th>誕生日</th><td><?= htmlspecialchars($birthday) ?></td></tr>
         <tr><th>メールアドレス</th><td><?= htmlspecialchars($email) ?></td></tr>
+        <tr><th>パスワード</th><td>【表示されません】</td></tr> <!-- できればパスワードの文字数だけ反映させたい -->
         <tr><th>住所</th><td><?= htmlspecialchars($address) ?></td></tr>
         <tr><th>所属施設</th><td><?= htmlspecialchars($facility) ?></td></tr>
+        <tr><th>権限</th><td><?= htmlspecialchars($user_role) ?></td></tr>
         <tr><th>知ったきっかけ</th><td><?= htmlspecialchars($whereDidYouHear) ?></td></tr>
         <tr><th>期待する機能</th><td><?= htmlspecialchars($expectations) ?></td></tr>
     </table>

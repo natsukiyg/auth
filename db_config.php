@@ -7,13 +7,14 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-// .env ファイルの読み込み確認
+/* // .env ファイルの読み込み確認
 echo '.env ファイルの読み込みに成功しました！<br>';
 
 // 環境変数の値をデバッグ表示
 echo 'DB_NAME_LOCAL: ' . $_ENV['DB_NAME_LOCAL'] . '<br>';
 echo 'DB_HOST_LOCAL: ' . $_ENV['DB_HOST_LOCAL'] . '<br>';
 echo 'DB_PORT_LOCAL: ' . $_ENV['DB_PORT_LOCAL'] . '<br>';
+ */
 
 // 環境に応じて接続設定を切り替え
 if ($_SERVER['HTTP_HOST'] === 'localhost' || $_SERVER['HTTP_HOST'] === '127.0.0.1') {
@@ -38,8 +39,8 @@ try {
     $dsn = "mysql:dbname={$dbName};charset=utf8mb4;port={$dbPort};host={$dbHost}";
     
     // デバッグ: DSN と環境変数を表示
-    echo '接続する DSN: ' . $dsn . '<br>';
-    echo '接続するデータベース名: ' . $dbName . '<br>';
+    //echo '接続する DSN: ' . $dsn . '<br>';
+    //echo '接続するデータベース名: ' . $dbName . '<br>';
     
     // PDOインスタンスの作成
     $pdo = new PDO($dsn, $dbUser, $dbPass);
@@ -48,8 +49,8 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // 接続成功メッセージ
-    echo "データベース接続成功！<br>";
-    echo "使用するデータベース名: " . $dbName . "<br>";
+    //echo "データベース接続成功！<br>";
+    //echo "使用するデータベース名: " . $dbName . "<br>";
     
 } catch (PDOException $e) {
     // 接続エラーの場合

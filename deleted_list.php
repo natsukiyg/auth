@@ -1,21 +1,10 @@
 <?php
-/* // DB接続
-$dbn ='mysql:dbname=db2;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
-
-try {
-    $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-    echo json_encode(["db error" => "{$e->getMessage()}"]);
-    exit();
-} */
 
 // DB接続設定
 include("db_config.php");
 
 // 削除されたデータを取得（deleted_at が NULL でない）
-$sql = 'SELECT * FROM db2_table WHERE deleted_at IS NOT NULL';
+$sql = 'SELECT * FROM auth_table WHERE deleted_at IS NOT NULL';
 $stmt = $pdo->prepare($sql);
 
 // SQL実行（実行に失敗すると `sql error ...` が出力される）
@@ -34,7 +23,7 @@ if (isset($_POST['restore'])) {
     $id = $_POST['id'];
 
     // 復元操作: deleted_atをNULLにリセット
-    $sql = "UPDATE db2_table SET deleted_at = NULL WHERE memberId = :id";
+    $sql = "UPDATE auth_table SET deleted_at = NULL WHERE memberId = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 

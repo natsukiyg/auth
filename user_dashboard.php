@@ -19,14 +19,14 @@ $is_approved = $_SESSION['is_approved'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ユーザーダッシュボード</title>
+    <title>ユーザー用ダッシュボード</title>
     <link rel="stylesheet" href="./css/dashboard.css">
 </head>
 <body>
 
-<h1>ようこそ、<?php echo htmlspecialchars($user_name, ENT_QUOTES, 'UTF-8'); ?>さん</h1>
+<h1>ようこそ！ <?php echo htmlspecialchars($user_name, ENT_QUOTES, 'UTF-8'); ?>さん</h1>
 
-<p>あなたのロール: 
+<p>あなたの権限: 
 <?php
     if ($user_role == 0) {
         echo "スタッフ（閲覧のみ）";

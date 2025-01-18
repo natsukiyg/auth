@@ -4,11 +4,11 @@
 include("db_config.php"); // db_config.phpの中身を読み込むので、$dbnや$pdoが使えるようになる
 session_start();
 
-// ログインしていない場合、login.php にリダイレクト
+/* // ログインしていない場合、login.php にリダイレクト
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit;
-} 
+}  */
 
 // 管理者だけがアクセスできるようにチェック（`user_role`が2なら管理者）
 if ($_SESSION['user_role'] != 2) {
@@ -18,7 +18,7 @@ if ($_SESSION['user_role'] != 2) {
 
 // 承認待ちユーザーを取得
 try {
-    $sql = "SELECT id, name, email, user_role FROM users WHERE is_approved = 0";
+    $sql = "SELECT memberId, name, email, user_role FROM auth_table WHERE is_approved = 0";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $users = $stmt->fetchAll();

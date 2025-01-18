@@ -26,7 +26,7 @@ include("db_config.php"); // db_config.phpの中身を読み込むので、$dbn�
             <label for="gender">性別：</label>
             <input type="radio" id="male" name="gender" value="男性" required> 男性
             <input type="radio" id="female" name="gender" value="女性"> 女性
-            <input type="radio" id="none" name="gender" value="答えたくない"> 答えたくない<br>
+            <input type="radio" id="none" name="gender" value="無回答"> 無回答<br>
 
             <label for="birthday">誕生日：</label>
             <input type="date" id="birthday" name="birthday" required><br>

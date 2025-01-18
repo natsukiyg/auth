@@ -1,17 +1,5 @@
 <?php
 
-/* // DB接続
-$dbn ='mysql:dbname=db2;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
-
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-} */
-
 // db_config.phpからデータベース接続情報を持ってくる
 include("db_config.php"); // db_config.phpの中身を読み込むので、$dbnや$pdoが使えるようになる
 
@@ -21,7 +9,7 @@ if (isset($_POST['delete'])) {
     $id = $_POST['id'];
 
     // 削除操作: deleted_atに現在の日時をセット
-    $sql = "UPDATE db2_table SET deleted_at = NOW() WHERE memberId = :id";
+    $sql = "UPDATE auth_table SET deleted_at = NOW() WHERE memberId = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 
@@ -38,7 +26,7 @@ if (isset($_POST['delete'])) {
 }
 
 // SQL作成
-$sql = 'SELECT * FROM db2_table WHERE deleted_at IS NULL'; // deleted_at が NULL のものだけ取得
+$sql = 'SELECT * FROM auth_table WHERE deleted_at IS NULL'; // deleted_at が NULL のものだけ取得
 $stmt = $pdo->prepare($sql);
 
 //SQL実行（実行に失敗すると `sql error ...` が出力される）
@@ -69,7 +57,7 @@ foreach ($result as $record) {
         <td>{$record["updated_at"]}</td>
         <td>
             <!-- 編集ボタン -->
-            <a href='edit.php?id={$record["memberId"]}'>編集</a> 
+            <a href='edit_profile.php?id={$record["memberId"]}'>編集</a> 
             <!-- 削除ボタン -->
             <form action='read.php' method='POST' onsubmit='return confirm(\"本当に削除しますか？\");' style='display:inline'>
                 <input type='hidden' name='id' value='{$record["memberId"]}'>

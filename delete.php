@@ -1,11 +1,15 @@
 <?php
+
+// DB接続設定
+include("db_config.php");
+
 session_start();
 
-// ログインしていない場合、login.php にリダイレクト
+/* // ログインしていない場合、login.php にリダイレクト
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit;
-}
+} */
 
 // 削除するメンバーIDをGETパラメータから取得
 if (!isset($_GET['id'])) {
@@ -14,25 +18,13 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-/* // DB接続
-$dbn ='mysql:dbname=db2;charset=utf8mb4;port=3306;host=localhost'; //phpMyAdminのホスト名
-$user = 'root';
-$pwd = '';
-
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-} // 「dbError:...」が表示されたらdb接続でエラーが発生していることがわかる．
- */
 // DB接続設定
 include("db_config.php");
 
 // SQLでメンバー情報を削除
-$sql = "DELETE FROM db2_table WHERE memberId = :id";
+$sql = "DELETE FROM auth_table WHERE memberId = :memberId";
 $stmt = $pdo->prepare($sql);
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':memberId', $id, PDO::PARAM_INT);
 
 try {
     $stmt->execute();

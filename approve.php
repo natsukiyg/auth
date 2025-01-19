@@ -10,7 +10,7 @@ if ($_SESSION['user_role'] != 2) {
 
 // 承認待ちユーザーを取得
 try {
-    $sql = "SELECT id, name, email, user_role FROM users WHERE is_approved = 0";
+    $sql = "SELECT memberId, name, email, facility, user_role, registered_at FROM auth_table WHERE is_approved = 0";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $users = $stmt->fetchAll();
@@ -27,6 +27,16 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>未承認ユーザー一覧</title>
     <link rel="stylesheet" href="./css/admin.css">
+    <script type="text/javascript">
+        // 承認・拒否時に確認ポップアップを表示
+        function confirmAction(userName, facilityName, userRole, action) {
+            let role = (userRole == 1) ? "チームメンバー" : "管理者";
+            let actionText = (action == 'approve') ? "承認" : "拒否";
+            let message = userName + " さん（所属施設名：" + facilityName + "）の " + role + " を " + actionText + " しますか？";
+
+            return confirm(message);  // ユーザーがOKを押した場合のみ送信
+        }
+    </script>
 </head>
 <body>
 
@@ -37,7 +47,9 @@ try {
     <tr>
         <th>名前</th>
         <th>メールアドレス</th>
+        <th>所属施設</th>
         <th>権限</th>
+        <th>登録日時</th>
         <th>操作</th>
     </tr>
 
@@ -45,6 +57,9 @@ try {
     <tr>
         <td><?php echo htmlspecialchars($user['name']); ?></td>
         <td><?php echo htmlspecialchars($user['email']); ?></td>
+        <td>
+            <?php echo htmlspecialchars($user['facility']) ? htmlspecialchars($user['facility']) : "未設定"; ?>
+        </td>
         <td>
             <?php
                 if ($user['user_role'] == 1) echo "チームメンバー";
@@ -54,9 +69,17 @@ try {
         <td>
             <!-- 承認・拒否ボタン -->
             <form action="approve_action.php" method="POST" style="display:inline;">
-                <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                <button type="submit" name="action" value="approve">承認</button>
-                <button type="submit" name="action" value="reject">拒否</button>
+                <input type="hidden" name="user_id" value="<?php echo $user['memberId']; ?>">
+                
+                <!-- 承認ボタン -->
+                <button type="submit" name="action" value="approve" onclick="return confirmAction('<?php echo addslashes($user['name']); ?>', '<?php echo addslashes($user['facility']); ?>', <?php echo $user['user_role']; ?>, 'approve');">
+                    承認
+                </button>
+
+                <!-- 拒否ボタン -->
+                <button type="submit" name="action" value="reject" onclick="return confirmAction('<?php echo addslashes($user['name']); ?>', '<?php echo addslashes($user['facility']); ?>', <?php echo $user['user_role']; ?>, 'reject');">
+                    拒否
+                </button>
             </form>
         </td>
     </tr>

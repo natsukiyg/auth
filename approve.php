@@ -30,7 +30,14 @@ try {
     <script type="text/javascript">
         // 承認・拒否時に確認ポップアップを表示
         function confirmAction(userName, facilityName, userRole, action) {
-            let role = (userRole == 1) ? "チームメンバー" : "管理者";
+            let role = "";
+            if (userRole == 1) {
+                role = "チームメンバー";
+            } else if (userRole == 2) {
+                role = "管理者";
+            } else if (userRole == 0) {
+                role = "スタッフ";
+            }
             let actionText = (action == 'approve') ? "承認" : "拒否";
             let message = userName + " さん（所属施設名：" + facilityName + "）の " + role + " を " + actionText + " しますか？";
 
@@ -42,6 +49,9 @@ try {
 
 <h1>未承認ユーザー一覧</h1>
 
+<!-- 「管理者ページへ戻る」リンクを追加 -->
+<p><a href="admin.php">管理者ページへ戻る</a></p>
+
 <!-- 承認待ちユーザーをテーブルで表示 -->
 <table border="1">
     <tr>
@@ -49,7 +59,7 @@ try {
         <th>メールアドレス</th>
         <th>所属施設</th>
         <th>権限</th>
-        <th>登録日時</th>
+        <th>登録日時</th> <!-- 登録日時カラムを追加 -->
         <th>操作</th>
     </tr>
 
@@ -64,7 +74,12 @@ try {
             <?php
                 if ($user['user_role'] == 1) echo "チームメンバー";
                 else if ($user['user_role'] == 2) echo "管理者";
+                else if ($user['user_role'] == 0) echo "スタッフ";
             ?>
+        </td>
+        <td>
+            <!-- 登録日時を表示（`registered_at`をフォーマットして表示） -->
+            <?php echo date('Y-m-d H:i:s', strtotime($user['registered_at'])); ?>
         </td>
         <td>
             <!-- 承認・拒否ボタン -->
@@ -76,11 +91,24 @@ try {
                     承認
                 </button>
 
-                <!-- 拒否ボタン -->
-                <button type="submit" name="action" value="reject" onclick="return confirmAction('<?php echo addslashes($user['name']); ?>', '<?php echo addslashes($user['facility']); ?>', <?php echo $user['user_role']; ?>, 'reject');">
+                <!-- 拒否ボタンと拒否理由 -->
+                <button type="button" onclick="showRejectionReasonForm(<?php echo $user['memberId']; ?>);">
                     拒否
                 </button>
+
+                <!-- 拒否理由の入力フォーム（初期状態では非表示） -->
+                <div id="rejection-form-<?php echo $user['memberId']; ?>" style="display:none;">
+                    <textarea name="rejection_reason" placeholder="拒否理由を入力してください"></textarea>
+                    <button type="submit" name="action" value="reject">拒否確定</button>
+                </div>
             </form>
+
+            <script>
+                function showRejectionReasonForm(userId) {
+                    // 拒否ボタンを押すと、拒否理由フォームが表示される
+                    document.getElementById("rejection-form-" + userId).style.display = 'block';
+                }
+            </script>
         </td>
     </tr>
     <?php endforeach; ?>

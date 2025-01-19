@@ -92,6 +92,49 @@ button[type="submit"]:active {
     transform: scale(0.98);
 }
 
+/* ログアウトボタンとダッシュボードに戻るボタンの横並び */
+#button-container {
+    display: flex;
+    justify-content: center; /* ボタンを均等に配置 */
+    gap: 20px; /* ボタン間のスペース */
+    margin-top: 30px;
+}
+
+/* 各ボタン（ログアウト・ダッシュボード）に共通のスタイル */
+button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0; /* 余計なスペースを排除 */
+    cursor: pointer; /* カーソルをポインターに */
+}
+
+/* ログアウトボタンとダッシュボードボタンの画像 */
+#logout-img, #dashboard-img {
+    width: auto;
+    height: 50px; /* 画像の高さを調整 */
+    transition: transform 0.3s ease, filter 0.2s ease;
+}
+
+/* ホバー時に画像が少し大きくなる */
+#logout:hover #logout-img, #back-btn:hover #dashboard-img {
+    transform: scale(1.2);
+    filter: brightness(1.2); /* 明るくなる */
+}
+
+/* クリック時に元のサイズに戻る */
+#logout:active #logout-img, #back-btn:active #dashboard-img {
+    transform: scale(1);
+    filter: brightness(1);
+}
+
+/* ボタンの画像がきれいに揃うように調整 */
+button img {
+    display: block; /* 画像をブロック要素にして、親要素内で中央揃え */
+    max-width: 100%; /* 画像が親要素内で適切にサイズ調整される */
+    height: auto; /* 画像の高さを自動調整 */
+}
+
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
     h1 {

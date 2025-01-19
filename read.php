@@ -1,7 +1,11 @@
 <?php
+// エラーメッセージを表示する
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // db_config.phpからデータベース接続情報を持ってくる
-include("db_config.php"); // db_config.phpの中身を読み込むので、$dbnや$pdoが使えるようになる
+include("db_config.php");
 
 // 削除処理
 if (isset($_POST['delete'])) {
@@ -16,7 +20,7 @@ if (isset($_POST['delete'])) {
     try {
         $status = $stmt->execute(); // 実行
     } catch (PDOException $e) {
-        echo json_encode(["sql error" => "{$e->getMessage()}"]);
+        echo "SQLエラー: " . $e->getMessage();
         exit();
     }
 
@@ -29,20 +33,38 @@ if (isset($_POST['delete'])) {
 $sql = 'SELECT * FROM auth_table WHERE deleted_at IS NULL'; // deleted_at が NULL のものだけ取得
 $stmt = $pdo->prepare($sql);
 
-//SQL実行（実行に失敗すると `sql error ...` が出力される）
+//SQL実行
 try {
   $status = $stmt->execute();
 } catch (PDOException $e) {
-  echo json_encode(["sql error" => "{$e->getMessage()}"]);
+  echo "SQLエラー: " . $e->getMessage();
   exit();
 }
 
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC); //fetchAllで全てのデータを配列で取得できる
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC); //fetchAllで全てのデータを配列で取得
+
+// 権限と承認状態を変換する関数
+function getUserRole($role) {
+    if ($role == 1) {
+        return 'チームメンバー';
+    } elseif ($role == 2) {
+        return '管理者';
+    } else {
+        return 'スタッフ';
+    }
+}
+
+function getApprovalStatus($isApproved) {
+    return $isApproved == 1 ? '承認済' : '未承認';
+}
 
 // SQL実行の処理を関数化
 $output = "";
 foreach ($result as $record) {
-  $output .= "
+    $approvalStatus = getApprovalStatus($record["is_approved"]);
+    $rejectionReason = !empty($record["rejection_reason"]) ? "（拒否理由: " . htmlspecialchars($record["rejection_reason"]) . "）" : '';
+
+    $output .= "
     <tr>
         <td>{$record["memberId"]}</td>
         <td>{$record["name"]}</td>
@@ -51,6 +73,8 @@ foreach ($result as $record) {
         <td>{$record["email"]}</td>
         <td>{$record["address"]}</td>
         <td>{$record["facility"]}</td>
+        <td>" . getUserRole($record["user_role"]) . "</td> <!-- 権限を変換 -->
+        <td>{$approvalStatus} {$rejectionReason}</td> <!-- 承認状態と拒否理由 -->
         <td>{$record["whereDidYouHear"]}</td>
         <td>{$record["expectations"]}</td>
         <td>{$record["registered_at"]}</td>
@@ -65,7 +89,7 @@ foreach ($result as $record) {
             </form>
         </td>
     </tr>
-  ";
+    ";
 }
 ?>
 
@@ -98,6 +122,8 @@ foreach ($result as $record) {
                 <th>メールアドレス</th>
                 <th>住所</th>
                 <th>所属施設</th>
+                <th>権限</th>
+                <th>承認状態</th>
                 <th>知ったきっかけ</th>
                 <th>期待する機能</th>
                 <th>登録日時</th>

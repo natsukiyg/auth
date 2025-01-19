@@ -8,8 +8,8 @@ session_start();
 if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
     header('Location: login.php');
     exit;
-}  */
-
+}
+ */
 // 管理者だけがアクセスできるようにチェック（`user_role`が2なら管理者）
 if ($_SESSION['user_role'] != 2) {
     echo "アクセス権限がありません。";
@@ -50,12 +50,23 @@ try {
     <li><a href="approve.php">未承認ユーザー一覧を見る</a></li>
 </ul>
 
-<!-- ログアウトボタン -->
-<form method="POST" action="logout.php">
-    <button id="logout">
-        <img src="img/logout.png" alt="logout" id="logout">
-    </button>
-</form>
+<!-- ログアウトボタンとダッシュボード戻るボタンを横並びにするための親要素 -->
+<div id="button-container">
+    
+    <!-- ダッシュボードに戻るボタン -->
+    <form method="POST" action="user_dashboard.php">
+        <button id="back-btn" style="background: transparent; border: none; padding: 0;">
+            <img src="img/dashboard2.png" alt="back-to-dashboard" id="dashboard-img">
+        </button>
+    </form>
+
+    <!-- ログアウトボタン -->
+    <form method="POST" action="logout.php">
+        <button id="logout" style="background: transparent; border: none; padding: 0;">
+            <img src="img/logout.png" alt="logout" id="logout-img">
+        </button>
+    </form>
+</div>
 
 </body>
 </html>

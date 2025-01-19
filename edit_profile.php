@@ -5,18 +5,14 @@ include("db_config.php"); // DB接続設定ファイル
 
 session_start();
 
-/* // ログインしていない場合、login.php にリダイレクト
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+// ログインしていない場合、login.php にリダイレクト
+if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
-} */
-
-// 編集するメンバーIDをGETパラメータから取得
-if (!isset($_GET['id'])) {
-    exit("メンバーIDが指定されていません。");
 }
 
-$id = $_GET['id'];
+// 編集するメンバーIDをGETパラメータから取得
+$id = $_SESSION['user_id'];
 
 // SQLでメンバー情報を取得
 $sql = "SELECT * FROM auth_table WHERE memberId = :id";
@@ -44,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $gender = $_POST['gender'];
     $birthday = $_POST['birthday'];
     $email = $_POST['email'];
+    $password = $_POST['password'];
     $address = $_POST['address'];
     $facility = $_POST['facility'];
     $user_role = $_POST['user_role'];
@@ -65,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     //タイムゾーン設定
     date_default_timezone_set('Asia/Tokyo');
-    
+
     //現在の日時を取得（更新日時として使用）
     $updated_at = date('Y-m-d H:i:s');
 

@@ -20,7 +20,7 @@ $is_approved = $_SESSION['is_approved'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ユーザー用ダッシュボード</title>
-    <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/user_dashboard.css">
 </head>
 <body>
 
@@ -42,10 +42,8 @@ $is_approved = $_SESSION['is_approved'];
 <?php if ($is_approved == 1): ?>
     <p>あなたは承認されています。</p>
 
-    <!-- user_role 1の場合、編集リンク -->
-    <?php if ($user_role == 1 || $user_role == 2): ?>
-        <p><a href="edit_profile.php">プロフィール編集</a></p>
-    <?php endif; ?>
+    <!-- すべてのユーザーにプロフィール編集リンクを表示 -->
+    <p><a href="edit_profile.php?id=<?php echo $_SESSION['user_id']; ?>">プロフィール編集</a></p>
 
     <!-- user_role 2の場合、管理者リンク -->
     <?php if ($user_role == 2): ?>
@@ -55,6 +53,13 @@ $is_approved = $_SESSION['is_approved'];
 <?php else: ?>
     <p>あなたのアカウントは承認待ちです。</p>
 <?php endif; ?>
+
+<!-- ログアウトボタン -->
+<form method="POST" action="logout.php">
+    <button id="logout" style="background: transparent; border: none; padding: 0;">
+        <img src="img/logout.png" alt="logout" id="logout">
+    </button>
+</form>
 
 </body>
 </html>

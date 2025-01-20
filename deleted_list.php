@@ -80,8 +80,10 @@ foreach ($result as $record) {
 <body>
     <h1>削除データリスト</h1>
 
-    <!--管理者ページに戻るリンク-->
-    <p><a href="admin.php">管理者ページに戻る</a></p>
+    <!-- 管理者ページへのリンク -->
+    <div class="admin-link">
+        <a href="admin.php" class="action-btn">管理者ページ</a>
+    </div>
 
     <table>
     <thead>

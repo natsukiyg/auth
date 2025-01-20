@@ -43,14 +43,23 @@ try {
 
             return confirm(message);  // ユーザーがOKを押した場合のみ送信
         }
+
+        // 拒否理由のフォーム表示制御
+        function showRejectionReasonForm(userId) {
+            // 拒否理由フォームの表示・非表示を制御
+            const form = document.getElementById("rejection-form-" + userId);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
     </script>
 </head>
 <body>
 
 <h1>未承認ユーザー一覧</h1>
 
-<!-- 「管理者ページへ戻る」リンクを追加 -->
-<p><a href="admin.php">管理者ページへ戻る</a></p>
+<!-- 「管理者ページ」リンクを追加 -->
+<div class="admin-link">
+    <a href="admin.php" class="action-btn">管理者ページ</a>
+</div>
 
 <!-- 承認待ちユーザーをテーブルで表示 -->
 <table border="1">
@@ -99,7 +108,7 @@ try {
                 <!-- 拒否理由の入力フォーム（初期状態では非表示） -->
                 <div id="rejection-form-<?php echo $user['memberId']; ?>" style="display:none;">
                     <textarea name="rejection_reason" placeholder="拒否理由を入力してください"></textarea>
-                    <button type="submit" name="action" value="reject">拒否確定</button>
+                    <button type="submit" name="action" value="reject">送信</button>
                 </div>
             </form>
 

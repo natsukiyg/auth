@@ -27,6 +27,9 @@ try {
     exit();
 }
 
+// ユーザー情報を取得
+$user_name = $_SESSION['user_name'];
+
 ?>
 
 <!DOCTYPE html>
@@ -40,11 +43,11 @@ try {
 <body>
 
 <h1>管理者ページ</h1>
-<p>ようこそ、管理者様！</p>
+<p>ようこそ、<?php echo htmlspecialchars($user_name, ENT_QUOTES, 'UTF-8'); ?>さん！</p>
 <p>以下のリンクから管理者機能にアクセスできます。</p>
 
 <ul>
-    <li><a href="index.php">メンバー登録フォームを見る</a></li>
+    <li><a href="registration.php">メンバー登録フォームを見る</a></li>
     <li><a href="read.php">登録データリストを見る</a></li>
     <li><a href="deleted_list.php">削除されたデータリストを見る</a></li>
     <li><a href="approve.php">未承認ユーザー一覧を見る</a></li>

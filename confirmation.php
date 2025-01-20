@@ -83,14 +83,14 @@ switch ($user_role) {
         <tr><th>期待する機能</th><td><?= htmlspecialchars($expectations) ?></td></tr>
     </table>
 
-    <!-- 「入力画面に戻る」ボタン -->
+    <!-- 「トップページに戻る」ボタン -->
     <a href="index.php">
-        <button class="action-btn"><span>入力画面に戻る</span></button>
+        <button class="action-btn"><span>トップページに戻る</span></button>
     </a>
 
     <!-- 自動遷移メッセージ -->
     <div id="redirect-message">
-        このページは10秒後に自動的に入力画面に戻ります。
+        このページは10秒後に自動的にトップページに戻ります。
     </div>
 
     <script>

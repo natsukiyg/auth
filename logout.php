@@ -1,9 +1,10 @@
 <?php
 // ログアウト処理
 session_start();
-session_unset();
-session_destroy();
+session_unset(); // セッション変数を全て削除
+session_destroy();  // セッションを破棄
 
-header('Location: login.php');
+// ログアウト後、トップ画面にリダイレクト
+header('Location: index.php');
 exit;
 ?>

@@ -20,8 +20,8 @@ h1 {
 
 /* 削除されたデータに対する背景色を変更 */
 .deleted-row {
-    background-color: #f8d7da; /* 削除されたデータの背景色（薄い赤） */
-    color: #721c24; /* 薄赤背景に合う色（警告色） */
+    background-color: #fce4ec; /* 少し落ち着いたピンク色（削除行） */
+    color: #ad3d3d; /* 薄赤背景に合う警告色（少しダークな赤） */
 }
 
 /* テーブルのスタイル */
@@ -37,24 +37,30 @@ th, td {
     text-align: left; /* 左寄せ */
     border: 1px solid #ddd; /* ボーダーを薄く */
     word-wrap: break-word; /* 長い文字列を折り返し */
+    color: #333; /* 文字色を濃い色にしてコントラストを強化 */
 }
 
 th {
     background-color: #f4f4f4; /* ヘッダーの背景色 */
     font-weight: bold;
+    color: #3a4e7d; /* ヘッダー文字色をネイビーに */
+}
+
+tr:nth-child(odd) {
+    background-color: #f9f9f9; /* 奇数行の背景色をライトグレー */
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9; /* 偶数行の背景色を薄く */
+    background-color: #f8d9e4; /* 偶数行の背景色を薄いピンク */
 }
 
 tr:hover {
-    background-color: #f1f1f1; /* 行にカーソルを乗せたときの背景色 */
+    background-color: #e2b2c8; /* ホバー時に背景色を少し暗いピンク系に変更 */
 }
 
 /* 復元ボタンのスタイル */
 .restore-btn {
-    background-color: #28a745; /* 緑色（復元ボタン） */
+    background-color: #f8d9e4; /* 優しいピンク色 */
     color: #fff;
     font-size: 1.1em;
     padding: 8px 16px;
@@ -66,7 +72,7 @@ tr:hover {
 
 /* 復元ボタンのホバー効果 */
 .restore-btn:hover {
-    background-color: #218838; /* ダークグリーンに変化 */
+    background-color: #e2b2c8; /* 少し濃い目のピンク */
     transform: scale(1.05);
 }
 
@@ -83,7 +89,7 @@ tr:hover {
 
 .admin-link a {
     display: inline-block;
-    background-color: #7c4d29; /* ボタン風のブラウン色 */
+    background-color: #f8d9e4; /* 優しいピンク色 */
     color: #fff;
     font-size: 1.1em;
     padding: 10px 20px;
@@ -94,7 +100,7 @@ tr:hover {
 
 /* リンクのホバー効果 */
 .admin-link a:hover {
-    background-color: #5d3a23; /* ダークブラウンに変化 */
+    background-color: #e2b2c8; /* 少し濃い目のピンク */
     transform: scale(1.05);
 }
 

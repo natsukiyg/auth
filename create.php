@@ -51,6 +51,11 @@ if (!strtotime($birthday)) {
 //パスワードをハッシュ化
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
+//もしパスワードのハッシュ化が失敗した場合、エラーメッセージを出す
+if (!$passwordHash) {
+  exit("パスワードのハッシュ化に失敗しました");
+}
+
 //user_roleが1または2の場合、承認待ちとして登録
 $is_approved = ($user_role === 0) ? 1 : 0; // 0:承認済み, 1:承認待ち
 

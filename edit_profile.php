@@ -86,7 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         $stmt->execute();
-        header("Location: read.php"); // 編集が成功したら、一覧ページにリダイレクト
+        // 更新成功したら、ポップアップを表示し、一定時間後にユーザーダッシュボードへ遷移
+        echo '<script type="text/javascript">
+                alert("更新が完了しました！");
+                setTimeout(function() {
+                    window.location.href = "user_dashboard.php";
+                }, 1500); // 1.5秒後にリダイレクト
+              </script>';
         exit;
     } catch (PDOException $e) {
         echo "更新に失敗しました: " . $e->getMessage();

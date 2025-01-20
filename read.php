@@ -81,7 +81,7 @@ foreach ($result as $record) {
         <td>{$record["updated_at"]}</td>
         <td>
             <!-- 編集ボタン -->
-            <a href='edit_profile.php?id={$record["memberId"]}'>編集</a> 
+            <a href='edit_profile_admin.php?id={$record["memberId"]}'>編集</a> 
             <!-- 削除ボタン -->
             <form action='read.php' method='POST' onsubmit='return confirm(\"本当に削除しますか？\");' style='display:inline'>
                 <input type='hidden' name='id' value='{$record["memberId"]}'>
@@ -108,8 +108,6 @@ foreach ($result as $record) {
     <div class="admin-link">
         <a href="admin.php" class="action-btn">管理者ページ</a>
     </div>
-    <!-- 入力画面へのリンク -->
-    <a href="index.php">入力画面へ戻る</a>
 
     <table>
         <thead>

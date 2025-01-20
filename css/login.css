@@ -1,7 +1,7 @@
 /* ログインページのデザイン */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9; /* 落ち着いたライトグレーの背景 */
+    background-color: #f4f4f9; /* ライトグレー（グレージュ）の背景 */
     color: #333; /* テキストの色 */
     margin: 0;
     padding: 0;
@@ -15,12 +15,12 @@ body {
 
 h2 {
     font-size: 2em;
-    color: #7c4d29; /* ブラウン色 */
+    color: #3a4e7d; /* ネイビー色 */
     margin-bottom: 20px; /* タイトルの下の余白 */
 }
 
 form {
-    background-color: #fff;
+    background-color: #ffffff; /* 背景白 */
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -39,13 +39,15 @@ input[type="password"], input[type="email"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
+    background-color: #f7f7f7; /* 優しいグレー背景 */
+    color: #333;
 }
 
 button[type="submit"] {
     width: 100%;
     padding: 12px;
     font-size: 1.1rem;
-    background-color: #7c4d29;
+    background-color: #3a4e7d; /* ネイビー色 */
     color: white;
     border: none;
     border-radius: 5px;
@@ -54,7 +56,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #5d3a23;
+    background-color: #2b3b5f; /* ダークネイビー */
     transform: scale(1.05);
 }
 
@@ -62,7 +64,7 @@ button[type="button"] {
     width: 100%;
     padding: 12px;
     font-size: 1.1rem;
-    background-color: #f44336;
+    background-color: #e1a1d0; /* 優しいピンク色 */
     color: white;
     border: none;
     border-radius: 5px;
@@ -72,7 +74,7 @@ button[type="button"] {
 }
 
 button[type="button"]:hover {
-    background-color: #e53935;
+    background-color: #d59bc2; /* 少し濃い目のピンク */
     transform: scale(1.05);
 }
 
@@ -81,7 +83,7 @@ button[type="button"]:active {
 }
 
 p {
-    color: #f44336;
+    color: #f44336; /* エラーメッセージ用の赤 */
     font-size: 1.1rem;
     margin-top: 15px; /* エラーメッセージに余白を追加 */
 }

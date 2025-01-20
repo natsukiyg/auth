@@ -13,7 +13,7 @@ body {
 /* タイトル */
 h1 {
     text-align: center;
-    color: #333;
+    color: #ad3d3d; /* ダークピンク */
     font-size: 2.5em;
     margin-bottom: 30px;
 }
@@ -41,27 +41,27 @@ table th, table td {
 }
 
 table th {
-    background-color: #5c6bc0;
-    color: white;
+    background-color: #f1c6d1; /* 明るいピンク */
+    color: #fff;
 }
 
 table td {
-    background-color: #f9f9f9; /*セルの背景色*/
+    background-color: #f9f9f9; /* セルの背景色 */
 }
 
 table td:nth-child(even) {
-    background-color: #f1f1f1; /*偶数列*/
+    background-color: #f1f1f1; /* 偶数列 */
 }
 
 table td:first-child {
-    font-weight: bold; /*最初の列を太字に*/
+    font-weight: bold; /* 最初の列を太字に */
 }
 
 /* メッセージ */
 #response {
     text-align: center;
     font-size: 1.2em;
-    color: #28a745;
+    color: #28a745; /* 成功メッセージは緑 */
     margin-top: 20px;
     opacity: 0;
     transition: opacity 0.5s ease-in;
@@ -72,13 +72,13 @@ table td:first-child {
 }
 
 .error {
-    color: #dc3545;
+    color: #dc3545; /* エラーメッセージの赤色 */
     font-size: 1.1em;
 }
 
 /* 「登録データリストを見る」や「入力画面に戻る」ボタンのスタイル */
 button.action-btn {
-    background-color: #7c4d29; /* ブラウン */
+    background-color: #f8d9e4; /* 優しいピンク */
     color: #fff;
     border: none;
     padding: 15px 25px;
@@ -96,7 +96,7 @@ button.action-btn {
 
 /* ボタンのホバー効果 */
 button.action-btn:hover {
-    background-color: #5d3a23; /* ダークブラウンに変化 */
+    background-color: #e2b2c8; /* 濃いピンクに変化 */
     transform: scale(1.05); /* ホバー時に少し大きくなる */
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* シャドウを強調 */
 }
@@ -161,4 +161,3 @@ button.action-btn span {
     opacity: 1;
     transition: opacity 1s ease-in;
 }
-

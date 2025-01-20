@@ -1,20 +1,22 @@
 /* 全体のスタイル */
 body {
     font-family: Arial, sans-serif; /* フォントを見やすく設定 */
-    background-color: #f0f8ff;  /* 明るい背景色 */
+    background-color: #f4f4f9;  /* 明るいグレー背景 */
     line-height: 1.6;
     margin: 20px;
-    background-image: url();
+    background-image: url(); /* 背景画像があれば追加 */
     background-size: cover;
     background-position: center;
     height: 100vh;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 /* ヘッダーのスタイル */
 h1 {
     text-align: center;
-    color: #333;
+    color: #3a4e7d; /* ネイビー色 */
+    font-size: 2.5em;
+    margin-bottom: 20px;
 }
 
 /* テーブルのスタイル */
@@ -30,19 +32,25 @@ th, td {
     text-align: left; /* 左寄せ */
     border: 1px solid #ddd; /* ボーダーを薄く */
     word-wrap: break-word; /* 長い文字列を折り返し */
+    color: #333; /* 文字色を濃い色にしてコントラストをつける */
 }
 
 th {
     background-color: #f4f4f4; /* ヘッダーの背景色 */
     font-weight: bold;
+    color: #3a4e7d; /* ヘッダー文字色をネイビーに */
+}
+
+tr:nth-child(odd) {
+    background-color: #f9f9f9; /* 奇数行の背景色をライトグレー */
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9; /* 偶数行の背景色を薄く */
+    background-color: #f8d9e4; /* 偶数行の背景色を薄いピンク */
 }
 
 tr:hover {
-    background-color: #f1f1f1; /* 行にカーソルを乗せたときの背景色 */
+    background-color: #e2b2c8; /* 行にカーソルを乗せたときの背景色(少し暗いピンク) */
 }
 
 /* 管理者ページへのリンク */
@@ -53,7 +61,7 @@ tr:hover {
 
 .admin-link a {
     display: inline-block;
-    background-color: #7c4d29; /* ボタン風のブラウン色 */
+    background-color: #f8d9e4; /* 優しいピンク色 */
     color: #fff;
     font-size: 1.1em;
     padding: 10px 20px;
@@ -64,7 +72,7 @@ tr:hover {
 
 /* リンクのホバー効果 */
 .admin-link a:hover {
-    background-color: #5d3a23; /* ダークブラウンに変化 */
+    background-color: #e2b2c8; /* 優しいピンク */
     transform: scale(1.05);
 }
 

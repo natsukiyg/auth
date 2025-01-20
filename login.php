@@ -20,23 +20,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // ユーザーが見つかった場合、パスワードの照合
-        if ($user && password_verify($password, $user['password'])) {
+       // ユーザーが見つかった場合、パスワードの照合
+       if ($user && password_verify($password, $user['password'])) {
+
             // パスワードが一致した場合、セッションにユーザー情報をセット
+            $_SESSION['user_name'] = $user['name']; // ユーザー名を保存
             $_SESSION['user_id'] = $user['memberId'];
-            $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_role'] = $user['user_role'];  // 役割を保存（0, 1, 2）
-            $_SESSION['is_approved'] = $user['is_approved'];  // 承認状態を保存
+            $_SESSION['is_approved'] = $user['is_approved']; // 承認状態を保存（0:未承認, 1:承認済）
 
             // 全ユーザーがユーザーページに遷移
-            header('Location: user_dashboard.php'); // ユーザーのダッシュボードなどにリダイレクト
+            header('Location:user_dashboard.php'); // ユーザーのダッシュボードなどにリダイレクト
             exit;
         } else {
-            $error_message = "メールアドレスまたはパスワードが間違っています。";
+            // パスワードが一致しない場合
+            echo "メールアドレスまたはパスワードが間違っています";
         }
     } catch (PDOException $e) {
-        $error_message = "データベースエラー: " . $e->getMessage();
+        //データベース接続やSQL実行時のエラーがあった場合
+        echo "データベースエラー: " . $e->getMessage();
     }
 }
 ?>

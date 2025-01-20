@@ -56,8 +56,8 @@ $is_approved = $_SESSION['is_approved'];
 
 <!-- ログアウトボタン -->
 <form method="POST" action="logout.php">
-    <button id="logout" style="background: transparent; border: none; padding: 0;">
-        <img src="img/logout.png" alt="logout" id="logout">
+    <button id="logout-btn" style="background: transparent; border: none; padding: 0;">
+        <img src="img/logout.png" alt="logout" id="logout-img">
     </button>
 </form>
 
